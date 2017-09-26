@@ -1,5 +1,7 @@
 package application;
 
+import com.google.gson.JsonObject;
+
 import java.net.*;
 import java.io.*;
 
@@ -12,8 +14,9 @@ public class WikiConnectionReader {
         try{
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
-            while ((inputLine = in.readLine()) != null)
+            while ((inputLine = in.readLine()) != null){
                 return inputLine;
+            }
             in.close();
             return"";
         }
@@ -25,8 +28,7 @@ public class WikiConnectionReader {
     public String URLCreator(String searchTerm){
         String beginning = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&list=users&indexpageids=1&titles=";
         String end = "&rvprop=user%7Ctimestamp&rvlimit=30";
-        String fullUrl = beginning + searchTerm + end;
-        return fullUrl;
+        return beginning + searchTerm + end;
     }
 
 

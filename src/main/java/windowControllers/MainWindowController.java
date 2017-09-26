@@ -2,10 +2,13 @@ package windowControllers;
 
 import application.JsonSearcher;
 import application.WikiConnectionReader;
+import com.google.gson.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import jdk.nashorn.internal.parser.JSONParser;
 
 import java.io.IOException;
 
@@ -21,14 +24,16 @@ public class MainWindowController {
     }
 
     public void submit(ActionEvent actionEvent) {
-        String result = "No Connection To Wikipedia";
         try{
             String input = inputArea.getText();
+            if (input.contains(" ")){
+                input = input.replace(" ", "%20");
+            }
             WikiConnectionReader fetcher = new WikiConnectionReader();
-            JsonSearcher parser = new JsonSearcher();
+            JsonSearcher searcher = new JsonSearcher();
             String url = fetcher.URLCreator(input);
-            result = fetcher.URLConnection(url);
-            results.setText(result);
+            String jsonData = fetcher.URLConnection(url);
+            results.setText((searcher.JsonSearch(jsonData).toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }
