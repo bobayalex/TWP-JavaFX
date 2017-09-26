@@ -1,8 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.GridPane?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="windowControllers.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="windowControllers.MainWindowController">
+   <children>
+      <Label layoutX="146.0" layoutY="23.0" text="WIKIPEDIA EDIT DATA FETCHER" underline="true">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
+      <TextField fx:id="inputArea" layoutX="226.0" layoutY="88.0" />
+      <Label layoutX="250.0" layoutY="62.0" text="Enter Article Name:" />
+      <Button fx:id="submit" layoutX="273.0" layoutY="113.0" mnemonicParsing="false" onAction="#submit" text="Submit" />
+      <TextArea fx:id="results" layoutX="20.0" layoutY="186.0" prefHeight="225.0" prefWidth="560.0" wrapText="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+   </children>
+</AnchorPane>
