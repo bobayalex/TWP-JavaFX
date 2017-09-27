@@ -19,13 +19,12 @@ public class JsonSearcher {
     private ArrayList<String> timestamps = new ArrayList<String>();
 
 
-    public ArrayList<String> JsonSearch(String jsonDataInput){ // pulls data from Json file
+    public String JsonSearch(String jsonDataInput){ // pulls data from Json file, has to be long to be easy to follow
         try{
             com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
             JsonArray revisionsArray;
             ArrayList<String> userAndTimeList= new ArrayList<String>();//final array with all the revisions in it
             InputStream inputStream = new ByteArrayInputStream(jsonDataInput.getBytes());
-            //InputStream inputStream = getClass().getClassLoader().getResourceAsStream("sample.json") ;
             Reader reader = new InputStreamReader(inputStream);
             JsonElement rootElement = parser.parse(reader);
             JsonObject rootObject = rootElement.getAsJsonObject();
@@ -42,12 +41,13 @@ public class JsonSearcher {
             }
             ArraySeparator(userAndTimeList);
             Hashmapafiy();
-            return userAndTimeList;
+            return MakeOutputString();
+
+
         }
         catch (NullPointerException e){
-            ArrayList<String> error = new ArrayList<String>();
-            error.add("Page Not Found");
-            return error;
+           return ("Page Not Found");
+
         }
     }
 
@@ -60,10 +60,10 @@ public class JsonSearcher {
             }
 
             if (counter % 2 == 0) {
-                timestamps.add(inputArray.get(counter));
+                names.add(inputArray.get(counter));
 
             } else {
-                names.add(inputArray.get(counter));
+                timestamps.add(inputArray.get(counter));
             }
 
             counter++;
@@ -77,5 +77,16 @@ public class JsonSearcher {
             counter++;
         }
     }
+    public String MakeOutputString(){
+        String output= "";
+        int counter = 0;
+        while(counter < names.size()){
+            output=output + (counter+1)+". " +names.get(counter)+"\n"+timestamps.get(counter)+"\n";
+            counter++;
+        }
+    return output;
+    }
+
+
 }//main end
 
