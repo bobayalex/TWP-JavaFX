@@ -8,7 +8,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,10 @@ public class JsonSearcher {
     HashMap<String, String> finalValuesHM = new HashMap<String, String>();
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<String> timestamps = new ArrayList<String>();
+    private ArrayList<String> namesCopy = new ArrayList<String>();
+    private ArrayList<String> timestampsCopy = new ArrayList<String>();
+    private ArrayList<String> sortedNames = new ArrayList<String>();
+    private ArrayList<String> sortedTimestamps = new ArrayList<String>();
 
 
     public String JsonSearch(String jsonDataInput){ // pulls data from Json file, has to be long to be easy to follow
@@ -41,7 +47,7 @@ public class JsonSearcher {
             }
             ArraySeparator(userAndTimeList);
             Hashmapafiy();
-            return MakeOutputString();
+            return MakeOutputString(names, timestamps);
 
 
         }
@@ -77,16 +83,49 @@ public class JsonSearcher {
             counter++;
         }
     }
-    public String MakeOutputString(){
+    public String MakeOutputString(ArrayList<String> firstTerm, ArrayList<String>secondTerm){
         String output= "";
         int counter = 0;
-        while(counter < names.size()){
-            output=output + (counter+1)+". " +names.get(counter)+"\n"+timestamps.get(counter)+"\n";
+        while(counter < firstTerm.size()){
+            output=output + (counter+1)+". " +firstTerm.get(counter)+"\n"+secondTerm.get(counter)+"\n";
             counter++;
         }
     return output;
     }
 
+    public String SortingByMostEdits(){
+        namesCopy =names;
+        timestampsCopy=timestamps;
+        int counter = 0;
+        while(counter < names.size()){
+            AddString( Collections.frequency(namesCopy, namesCopy.get(0)), namesCopy.get(0));
+        }
+       return MakeOutputString(sortedNames,sortedTimestamps);
+    }
 
+    private void AddString(int amount, String object) {
+        SearchThrough(namesCopy, amount, object);
+
+    }
+
+    private void SearchThrough(ArrayList<String> list, int amount, String object) {
+        while (amount>0){
+            for (int c = 0; c < list.size(); c++)
+            {
+                if ( namesCopy.get(c).equals(object))     /* Searching element is present */
+                {
+                    sortedNames.add(namesCopy.get(c));
+                    sortedTimestamps.add(timestampsCopy.get(c));
+                    namesCopy.remove(c);
+                    timestampsCopy.remove(c);
+
+                    break;
+                }
+            }
+
+
+        amount--;
+        }
+    }
 }//main end
 

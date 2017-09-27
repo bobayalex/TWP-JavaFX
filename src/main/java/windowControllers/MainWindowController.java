@@ -33,7 +33,7 @@ public class MainWindowController {
             JsonSearcher searcher = new JsonSearcher();
             String url = fetcher.URLCreator(input);
             String jsonData = fetcher.URLConnection(url);
-            results.setText((searcher.JsonSearch(jsonData).toString()));
+            results.setText((searcher.JsonSearch(jsonData)));
         } catch (Exception e) {
             e.printStackTrace();
         }
