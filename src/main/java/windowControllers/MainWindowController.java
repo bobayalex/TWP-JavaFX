@@ -38,4 +38,22 @@ public class MainWindowController {
             e.printStackTrace();
         }
     }
+
+    public void sort(ActionEvent actionEvent){
+        try{
+            String input = inputArea.getText();
+            if (input.contains(" ")){
+                input = input.replace(" ", "%20");
+            }
+            WikiConnectionReader fetcher = new WikiConnectionReader();
+            JsonSearcher searcher = new JsonSearcher();
+            String url = fetcher.URLCreator(input);
+            String jsonData = fetcher.URLConnection(url);
+            searcher.JsonSearch(jsonData);
+            results.setText(searcher.SortingByMostEdits());
+            //NOT SURE WHY THIS PRINTS THE SAME AS THE OTHER METHOD
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
